@@ -11,6 +11,7 @@
     function Tile(x, y, val) {
       this.x = x;
       this.y = y;
+      this.val = val;
     }
 
     return Tile;
@@ -27,7 +28,7 @@
     }
 
     GameManager.prototype.initGrid = function() {
-      var i, randVal, x, xRand, y, yRand, _i, _j, _k, _ref, _ref1, _results;
+      var i, x, y, _i, _j, _k, _ref, _ref1, _results;
       if (this.grid === false) {
         this.grid = new Array(this.gridSize);
         for (x = _i = 0, _ref = this.gridSize; _i < _ref; x = _i += 1) {
@@ -39,15 +40,18 @@
       }
       _results = [];
       for (i = _k = 0; _k < 2; i = _k += 1) {
-        xRand = Math.floor(Math.random() * this.gridSize);
-        yRand = Math.floor(Math.random() * this.gridSize);
-        randVal = xRand % 2 === 0 ? 2 : 4;
-        _results.push(this.grid[xRand][yRand] = new Tile(xRand, yRand, randVal));
+        _results.push(this.generateTile());
       }
       return _results;
     };
 
-    GameManager.prototype.generateTile = function() {};
+    GameManager.prototype.generateTile = function() {
+      var randVal, xRand, yRand;
+      xRand = Math.floor(Math.random() * this.gridSize);
+      yRand = Math.floor(Math.random() * this.gridSize);
+      randVal = xRand % 2 === 0 ? 2 : 4;
+      return this.grid[xRand][yRand] = new Tile(xRand, yRand, randVal);
+    };
 
     return GameManager;
 

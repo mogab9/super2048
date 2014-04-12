@@ -5,8 +5,9 @@ class Tile
     y:    false
     val : false
     constructor: (x, y, val) ->
-        @x = x
-        @y = y
+        @x   = x
+        @y   = y
+        @val = val
 
 # Game Manager
 class GameManager
@@ -24,11 +25,13 @@ class GameManager
                     @grid[x][y] = {}
         # generate 2 random tiles
         for i in [0...2] by 1
-            xRand = Math.floor(Math.random() * @gridSize)
-            yRand = Math.floor(Math.random() * @gridSize)
-            randVal = if (xRand % 2 is 0) then 2 else 4
-            @grid[xRand][yRand] = new Tile(xRand, yRand, randVal)
+            @generateTile()
     generateTile: ->
+        xRand = Math.floor(Math.random() * @gridSize)
+        yRand = Math.floor(Math.random() * @gridSize)
+        randVal = if (xRand % 2 is 0) then 2 else 4
+        @grid[xRand][yRand] = new Tile(xRand, yRand, randVal)
+
 
 # Init game
 new GameManager()
