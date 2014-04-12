@@ -1,21 +1,14 @@
 
 # Tile
 class Tile
-    x:    false
-    y:    false
-    val : false
-    constructor: (x, y, val) ->
-        @x   = x
-        @y   = y
-        @val = val
+    constructor: ( @x = false, @y = false, @val = false ) ->
 
 # Game Manager
 class GameManager
-    grid:     false
-    gridSize: 3
-    constructor: -> 
+    constructor: ( @grid = false, @gridSize = 3) -> 
         @initGrid()
-    initGrid: ->
+    
+    initGrid: () ->
         if @grid is false
             # init grid
             @grid = new Array(@gridSize)
@@ -26,7 +19,8 @@ class GameManager
         # generate 2 random tiles
         for i in [0...2] by 1
             @generateTile()
-    generateTile: ->
+
+    generateTile: () ->
         xRand = Math.floor(Math.random() * @gridSize)
         yRand = Math.floor(Math.random() * @gridSize)
         randVal = if (xRand % 2 is 0) then 2 else 4
