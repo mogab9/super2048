@@ -7,7 +7,8 @@ class Tile
 class GameManager
     constructor: ( @grid = false, @gridSize = 3) -> 
         @initGrid()
-    
+
+    # Create grid in the model, generate 2 random tiles and init game view
     initGrid: () ->
         if @grid is false
             # init grid
@@ -19,13 +20,20 @@ class GameManager
         # generate 2 random tiles
         for i in [0...2] by 1
             @generateTile()
+        @initGameView()
 
+    # Init 
+    initGameView: () ->
+
+    # Generate tile at a random position
     generateTile: () ->
-        xRand = Math.floor(Math.random() * @gridSize)
-        yRand = Math.floor(Math.random() * @gridSize)
+        xRand   = Math.floor(Math.random() * @gridSize)
+        yRand   = Math.floor(Math.random() * @gridSize)
         randVal = if (xRand % 2 is 0) then 2 else 4
-        @grid[xRand][yRand] = new Tile(xRand, yRand, randVal)
-
+        if (@grid[xRand][yRand].val?)
+            @generateTile()
+        else
+            @grid[xRand][yRand] = new Tile(xRand, yRand, randVal)
 
 # Init game
 new GameManager()
