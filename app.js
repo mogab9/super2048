@@ -36,14 +36,48 @@
       return this.initGameView();
     };
 
-    GameManager.prototype.initGameView = function() {};
+    GameManager.prototype.initGameView = function() {
+      var cell, cellkey, gridContainer, htmlCell, htmlRow, row, rowKey, tile, _i, _len, _ref, _results;
+      gridContainer = document.getElementById('gridContainer');
+      if (gridContainer != null) {
+        _ref = this.grid;
+        _results = [];
+        for (rowKey = _i = 0, _len = _ref.length; _i < _len; rowKey = ++_i) {
+          row = _ref[rowKey];
+          htmlRow = document.createElement('div');
+          htmlRow.setAttribute('class', 'tileRow');
+          htmlRow.setAttribute('data-y', rowKey);
+          gridContainer.appendChild(htmlRow);
+          _results.push((function() {
+            var _j, _len1, _results1;
+            _results1 = [];
+            for (cellkey = _j = 0, _len1 = row.length; _j < _len1; cellkey = ++_j) {
+              cell = row[cellkey];
+              htmlCell = document.createElement('div');
+              htmlCell.setAttribute('class', 'tileContainer');
+              htmlCell.setAttribute('data-y', rowKey);
+              htmlCell.setAttribute('data-x', cellkey);
+              if (cell.val != null) {
+                tile = document.createElement('div');
+                tile.setAttribute('class', 'tile');
+                tile.innerHTML = cell.val;
+                htmlCell.appendChild(tile);
+              }
+              _results1.push(htmlRow.appendChild(htmlCell));
+            }
+            return _results1;
+          })());
+        }
+        return _results;
+      }
+    };
 
     GameManager.prototype.generateTile = function() {
       var randVal, xRand, yRand;
       xRand = Math.floor(Math.random() * this.gridSize);
       yRand = Math.floor(Math.random() * this.gridSize);
       randVal = xRand % 2 === 0 ? 2 : 4;
-      if ((this.grid[xRand][yRand].val != null)) {
+      if (this.grid[xRand][yRand].val != null) {
         return this.generateTile();
       } else {
         return this.grid[xRand][yRand] = new Tile(xRand, yRand, randVal);

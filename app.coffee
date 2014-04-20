@@ -24,13 +24,34 @@ class GameManager
 
     # Init 
     initGameView: () ->
+        gridContainer = document.getElementById('gridContainer')
+        if gridContainer?
+            # Create tileRow
+            for row,rowKey in @grid
+                htmlRow = document.createElement('div')
+                htmlRow.setAttribute('class', 'tileRow')
+                htmlRow.setAttribute('data-y', rowKey)
+                gridContainer.appendChild(htmlRow)
+                # Create each cell in tileRow as a tileContainer
+                for cell,cellkey in row
+                    htmlCell = document.createElement('div')
+                    htmlCell.setAttribute('class', 'tileContainer')
+                    htmlCell.setAttribute('data-y', rowKey)
+                    htmlCell.setAttribute('data-x', cellkey)
+                    # Create a tile with its value if there's any
+                    if cell.val?
+                        tile = document.createElement('div')
+                        tile.setAttribute('class', 'tile')
+                        tile.innerHTML = cell.val
+                        htmlCell.appendChild(tile)
+                    htmlRow.appendChild(htmlCell)
 
     # Generate tile at a random position
     generateTile: () ->
         xRand   = Math.floor(Math.random() * @gridSize)
         yRand   = Math.floor(Math.random() * @gridSize)
         randVal = if (xRand % 2 is 0) then 2 else 4
-        if (@grid[xRand][yRand].val?)
+        if @grid[xRand][yRand].val?
             @generateTile()
         else
             @grid[xRand][yRand] = new Tile(xRand, yRand, randVal)
